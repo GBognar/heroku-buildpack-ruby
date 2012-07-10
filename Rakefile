@@ -343,8 +343,7 @@ desc "install exiftool"
 task "exiftool:install", :version do |t, args|
   version = args[:version] || "8.97"
   name = "exiftool-#{version}"
-  # prefix = "/app/vendor/#{name}"
-  prefix = "app/vendor/#{name}"
+  prefix = "/app/vendor/#{name}"
 
   Dir.mktmpdir("exiftool-") do |tmpdir|
     Dir.chdir(tmpdir) do |dir|
