@@ -11,6 +11,9 @@ class LanguagePack::Ruby < LanguagePack::Base
   BUNDLER_GEM_PATH    = "bundler-#{BUNDLER_VERSION}"
   NODE_VERSION        = "0.4.7"
   NODE_JS_BINARY_PATH = "node-#{NODE_VERSION}"
+  # Added for having an exiftool binary
+  EXIFTOOL_VERSION     = "8.97"
+  EXIFTOOL_BINARY_PATH = "exiftool-#{EXIFTOOL_VERSION}"
 
   # detects if this is a valid Ruby app
   # @return [Boolean] true if it's a Ruby app
@@ -257,7 +260,9 @@ ERROR
   # default set of binaries to install
   # @return [Array] resulting list
   def binaries
-    add_node_js_binary
+    # Added for having exiftool binaries
+    # add_node_js_binary is present as a default
+    [EXIFTOOL_BINARY_PATH] + add_node_js_binary
   end
 
   # vendors binaries into the slug

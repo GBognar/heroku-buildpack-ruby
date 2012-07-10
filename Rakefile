@@ -1,7 +1,7 @@
 require "fileutils"
 require "tmpdir"
 
-S3_BUCKET_NAME  = "heroku-buildpack-ruby"
+S3_BUCKET_NAME  = "heroku-buildpack-ruby-with-exiftool"
 VENDOR_URL      = "https://s3.amazonaws.com/#{S3_BUCKET_NAME}"
 
 def s3_tools_dir
@@ -330,6 +330,34 @@ task "libffi:install", :version do |t, args|
       ].join(" && ")
 
       sh "vulcan build -v -o #{name}.tgz --source #{name} --command=\"#{build_command}\""
+      s3_upload(tmpdir, name)
+    end
+  end
+end
+
+# The Rake task for building exiftool was copied from the repository at
+# https://github.com/captureteam/heroku-buildpack-ruby
+# from the file: 
+# https://github.com/captureteam/heroku-buildpack-ruby/blob/master/Rakefile  
+desc "install exiftool"
+task "exiftool:install", :version do |t, args|
+  version = args[:version] || "8.97"
+  name = "exiftool-#{version}"
+  # prefix = "/app/vendor/#{name}"
+  prefix = "app/vendor/#{name}"
+
+  Dir.mktmpdir("exiftool-") do |tmpdir|
+    Dir.chdir(tmpdir) do |dir|
+      FileUtils.rm_rf("#{tmpdir}/*")
+
+      sh "curl http://www.sno.phy.queensu.ca/~phil/exiftool/Image-ExifTool-#{version}.tar.gz -s -o - | tar vzxf -"
+
+      build_command = [
+        "mkdir -p #{prefix}",
+        "cp -r exiftool lib #{prefix}",
+      ].join(" && ")
+
+      sh "vulcan build -v -o #{name}.tgz -p #{prefix} -s Image-ExifTool-#{version} -c=\"#{build_command}\""
       s3_upload(tmpdir, name)
     end
   end

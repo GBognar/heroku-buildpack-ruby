@@ -1,0 +1,19 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+#
+# Ignore Foreman environment files
+*.env
+# Ignore bundler configuration
+.bundle
+# Ignore YARD configuration
+.yardoc
+# Ignore the vendor bundle
+vendor/bundle
+# Ignore the vendor cache
+vendor/cache
+# Ignore bundler stubs
+bin/
+
+# Ignore temporary and backup editor files
+**~
+**.un~
+**.swp
