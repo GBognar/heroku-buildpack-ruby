@@ -2,6 +2,8 @@
 #
 # Ignore Foreman environment files
 *.env
+# Ignore environment setting script
+set_env
 # Ignore bundler configuration
 .bundle
 # Ignore YARD configuration
