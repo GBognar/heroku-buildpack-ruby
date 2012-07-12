@@ -1,7 +1,8 @@
 require "fileutils"
 require "tmpdir"
 
-S3_BUCKET_NAME  = "heroku-buildpack-ruby-with-exiftool"
+# S3_BUCKET_NAME  = "heroku-buildpack-ruby-with-exiftool"
+S3_BUCKET_NAME  = "heroku-exiftool"
 VENDOR_URL      = "https://s3.amazonaws.com/#{S3_BUCKET_NAME}"
 
 def s3_tools_dir
