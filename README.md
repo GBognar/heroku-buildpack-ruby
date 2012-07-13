@@ -1,5 +1,11 @@
-Heroku buildpack: Ruby
-======================
+Heroku buildpack: Ruby + exiftool
+=================================
+
+This is a *customized* version of the 'canonical' Heroku buildpack for Ruby. See the **Additions** section for the changes introduced.
+
+All other information in this file comes from the README of the ['canonical' Heroku buildpack for Ruby](https://github.com/heroku/heroku-buildpack-ruby).
+
+-----
 
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Ruby, Rack, and Rails apps. It uses [Bundler](http://gembundler.com) for dependency management.
 
@@ -163,4 +169,15 @@ Rails 3 (config/application.rb is detected)
 * everything from Rails 2
 * install rails 3 plugins
   * [rails3_server_static_assets](https://github.com/pedro/rails3_serve_static_assets)
+
+-----
+
+##Additions
+These are the additions to the ['canonical' Heroku buildpack for Ruby](https://github.com/heroku/heroku-buildpack-ruby).
+
+### exiftool
+The [exiftool](http://www.sno.phy.queensu.ca/~phil/exiftool) was added for handling EXIF-data on the server-side
+
+* The addition itself was based on [the Heroku/Ruby buildpack by 'captureteam'](https://github.com/captureteam/heroku-buildpack-ruby). That buildpack contains other additions as well (e.g. ffmpeg with codecs), so you might be more interested in that.
+
 

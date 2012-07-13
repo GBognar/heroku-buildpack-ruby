@@ -1,3 +1,24 @@
+#Changelog
+
+**Note:** This changelog contains
+
+* the changes introduced in the ['canonical' Heroku buildpack for Ruby](https://github.com/heroku/heroku-buildpack-ruby) (entries without the '/c' signature)
+
+**and**
+
+* the changes introduced by the customization
+
+----
+
+## v28/c (2012-07-13) 
+Added exiftool
+
+## v28
+
+Features:
+
+* Vendor OpenJDK6 into slug when using JRuby
+
 ## v27 (6/14/2012)
 
 Bugfixes:
