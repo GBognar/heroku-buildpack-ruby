@@ -1,6 +1,10 @@
 require "fileutils"
 require "tmpdir"
 
+# S3_BUCKET_NAME  = "heroku-buildpack-ruby"
+# VENDOR_URL      = "https://s3.amazonaws.com/#{S3_BUCKET_NAME}"
+# ADDED_S3_BUCKET_NAME  = "capture-custom-for-heroku"
+# ADDED_VENDOR_URL      = "https://s3.amazonaws.com/#{S3_BUCKET_NAME}"
 S3_BUCKET_NAME  = "capture-custom-for-heroku"
 VENDOR_URL      = "https://s3.amazonaws.com/#{S3_BUCKET_NAME}"
 

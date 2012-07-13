@@ -13,7 +13,10 @@ class LanguagePack::Ruby < LanguagePack::Base
   NODE_JS_BINARY_PATH = "node-#{NODE_VERSION}"
   JVM_BASE_URL        = "http://heroku-jvm-langpack-java.s3.amazonaws.com"
   JVM_VERSION         = "openjdk6-latest"
-  # Added for having an exiftool binary
+  # Added to enable installation of packages from a different source
+  ADDED_S3_BUCKET_NAME  = "capture-custom-for-heroku"
+  ADDED_VENDOR_URL      = "https://s3.amazonaws.com/#{ADDED_S3_BUCKET_NAME}"
+  # Added for having an exiftool package
   EXIFTOOL_VERSION     = "8.97"
   EXIFTOOL_BINARY_PATH = "exiftool-#{EXIFTOOL_VERSION}"
 
@@ -286,14 +289,25 @@ ERROR
   # default set of binaries to install
   # @return [Array] resulting list
   def binaries
-    # Added for having exiftool binaries
-    # add_node_js_binary is present as a default
-    [EXIFTOOL_BINARY_PATH] + add_node_js_binary
+    add_node_js_binary
+  end
+
+  # set of added binaries/packages to install
+  # These are the binaries/packages that should be installed
+  # from ADDED_VENDOR_URL
+  # @return [Array] resulting list
+  def added_binaries
+    [EXIFTOOL_BINARY_PATH]
   end
 
   # vendors binaries into the slug
   def install_binaries
     binaries.each {|binary| install_binary(binary) }
+    Dir["bin/*"].each {|path| run("chmod +x #{path}") }
+    # After installing the binaries from the VENDOR_URL 
+    # install the additional binaries (from ADDED_VENDOR_URL)
+    added_binaries.each {|binary| install_added_binary(
+      binary,ADDED_VENDOR_URL) }
     Dir["bin/*"].each {|path| run("chmod +x #{path}") }
   end
 
@@ -305,6 +319,20 @@ ERROR
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
       run("curl #{VENDOR_URL}/#{name}.tgz -s -o - | tar xzf -")
+    end
+  end
+
+  # vendors an individual additional binary/package into the slug
+  # @param [String] name of the binary package
+  # @param [String] the added vendor URL
+  # # E.g.: https://s3.amazonaws.com/capture-custom-for-heroku/exiftool-8.97.tgz
+  # # here name = "exiftool-8.97"
+  # # added_vendor_url = "https://s3.amazonaws.com/capture-custom-for-heroku"
+  def install_added_binary(name, added_vendor_url)
+    bin_dir = "bin"
+    FileUtils.mkdir_p bin_dir
+    Dir.chdir(bin_dir) do |dir|
+      run("curl #{added_vendor_url}/#{name}.tgz -s -o - | tar xzf -")
     end
   end
 
