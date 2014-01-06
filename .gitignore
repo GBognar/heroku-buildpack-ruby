@@ -1,5 +1,3 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-#
 # Ignore Foreman environment files
 *.env
 # Ignore environment setting script
@@ -8,8 +6,6 @@ set_env
 .bundle
 # Ignore YARD configuration
 .yardoc
-# Ignore the vendor bundle
-vendor/bundle
 # Ignore the vendor cache
 vendor/cache
 # Ignore bundler stubs
@@ -19,3 +15,9 @@ bin/
 **~
 **.un~
 **.swp
+repos/*
+.DS_Store
+vendor/bundler/*
+vendor/bundle/*
+.env
+.ruby-version
